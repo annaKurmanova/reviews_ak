@@ -19,18 +19,26 @@ if(!defined('ABSPATH')) {
 }
 
 class ReviewsAK {
+
+  function __construct() {
+    add_action('init', array($this, 'custom_post_type'));
+  }
   function activate(){
-//generate a custom post type
+    // generate a custom post type
+    $this->custom_post_type();
+    // flush rewrite rules
+    flush_rewrite_rules();
   }
 
   function deactivate() {
-
+    // flush rewrite rules
+    flush_rewrite_rules();
   }
 
-  function uninstall() {
-    // delete cpt
-  }
+function custom_post_type() {
+  register_post_type('review', ['public' => true, 'label' => 'Reviews']);
 
+}
 
 }
 
@@ -48,4 +56,3 @@ register_activation_hook(__FILE__, array($reviewsAk, 'activate'));
 // deactivate
 register_deactivation_hook(__FILE__, array($reviewsAk, 'deactivate'));
 
-// uninstall
